@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>For My Luvluv</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #f3e8ff, #d8b4fe);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Full mobile container */
+.container {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    background: rgba(255,255,255,0.3);
+    padding: 30px 20px;
+    border-radius: 25px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+h1 {
+    font-size: 28px;
+    color: #6b21a8;
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 15px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 16px;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    background: #a855f7;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.hidden {
+    display: none;
+}
+
+#typewriter {
+    font-size: 17px;
+    color: #5b21b6;
+    min-height: 50px;
+    margin-top: 10px;
+}
+
+#countdown {
+    font-size: 70px;
+    color: #7e22ce;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.final-message {
+    display: none;
+    margin-top: 20px;
+    font-size: 17px;
+    color: #4c1d95;
+    line-height: 1.6;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.heart {
+    position: fixed;
+    animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>my luvluv 💜</h1>
+
+    <div id="loginSection">
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="checkPassword()">Open Your Surprise</button>
+    </div>
+
+    <div id="exciteSection" class="hidden">
+        <div id="typewriter"></div>
+        <div id="countdown"></div>
+    </div>
+
+    <div class="final-message" id="loveMessage">
+        <p>
+        Even if we are far away from each other,  
+        my heart chooses you every single day.  
+        Distance is just a test…  
+        and we are stronger than it. 💜
+        </p>
+        <br>
+        <button onclick="finalPopup()">I love you</button>
+    </div>
+
+</div>
+
+<audio id="bgMusic" src="paniwalaan.mp3"></audio>
+
+<script>
+function checkPassword() {
+    const pass = document.getElementById("password").value.trim();
+    if (pass === "my luvluv") {
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("exciteSection").classList.remove("hidden");
+
+        // Mobile-friendly audio play
+        document.getElementById("bgMusic").play().catch(()=>{});
+
+        startTypewriter();
+    } else {
+        alert("Wrong password 💔");
+    }
+}
+
+function startTypewriter() {
+    const text = "Wait… something wonderful is coming for you 💜";
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            document.getElementById("typewriter").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 45);
+        } else {
+            startCountdown();
+        }
+    }
+    type();
+}
+
+function startCountdown() {
+    let count = 5;
+    const countdownEl = document.getElementById("countdown");
+
+    const interval = setInterval(() => {
+        countdownEl.textContent = count;
+        count--;
+        if (count < 0) {
+            clearInterval(interval);
+            countdownEl.textContent = "";
+            showFinalMessage();
+        }
+    }, 1000);
+}
+
+function showFinalMessage() {
+    document.getElementById("exciteSection").classList.add("hidden");
+    document.getElementById("loveMessage").style.display = "block";
+    createHearts();
+}
+
+function createHearts() {
+    for (let i = 0; i < 35; i++) {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💜";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.bottom = "-20px";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+    }
+}
+
+function finalPopup() {
+    alert("No matter the distance… I am always yours. 💜");
+}
+</script>
+
+</body>
+</html>
